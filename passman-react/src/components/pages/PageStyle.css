@@ -1,0 +1,39 @@
+.Container {
+	min-height: 100vh;
+	width: 100%;
+	background-color: #cccccc;
+}
+
+.login-form > form > h3 {
+	text-align: center;
+}
+
+.login-form > form {
+	padding: 10px;
+	background-color: #ffffff;
+	border-radius: 5px;
+	box-shadow: 0 8px 6px -6px black;
+}
+
+.login-form {
+	margin-top: 140px;
+}
+
+.results {
+	border: 1px solid black;
+}
+
+.searchbox {
+	padding: 10px;
+	padding-top: 20px;
+	border-radius: 5px;
+}
+
+.resultbox {
+	border: 1px solid black;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	background-color: #ffffff;
+	padding: 15px;
+	border-radius: 5px;
+}
