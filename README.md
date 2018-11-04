@@ -5,7 +5,8 @@ This is a MERN (MongoDB, ExpressJS, ReactJS, NodeJs) App as password manager. Th
 Technologies used: 
   * Frontend: React js 
   * Fronted store management: Redux 
-  * UI: Reactstrap * server: express js 
+  * UI: Reactstrap 
+  * server: express js 
   * database: MongoDB with Mongoose 
   * backend: Node js
 
