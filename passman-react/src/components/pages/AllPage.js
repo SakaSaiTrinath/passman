@@ -34,17 +34,19 @@ class AllPage extends Component {
 										<th>Email</th>
 										<th>Password</th>
 										<th>Link</th>
+										<th>Tags</th>
 									</tr>
 								</thead>
 								<tbody>
 									{docs && docs.length === 0 ? (
 										<tr>
 											<th scope="row">-</th>
-											<td>-</td>
-											<td>-</td>
-											<td>-</td>
-											<td>-</td>
-											<td>-</td>
+											<td>----</td>
+											<td>----</td>
+											<td>----</td>
+											<td>----</td>
+											<td>----</td>
+											<td>----</td>
 										</tr>
 									) : (
 										docs.map(doc => (
@@ -55,6 +57,9 @@ class AllPage extends Component {
 												<td>{doc.email}</td>
 												<td>{doc.password}</td>
 												<td>{doc.link}</td>
+												<td>
+													{doc.tags.map(t => t + " ")}
+												</td>
 											</tr>
 										))
 									)}

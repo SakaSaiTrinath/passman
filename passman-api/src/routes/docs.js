@@ -13,7 +13,13 @@ router.get("/", (req, res) => {
 });
 
 router.post("/add_doc", (req, res) => {
-	const newDoc = new Doc({ ...req.body.doc, userId: req.currentUser._id });
+	const tags = Object.values(req.body.doc.tags); //converting object values into array
+	tags.join("").split(""); //Removing blank spaces in the array of text elements
+	const newDoc = new Doc({
+		...req.body.doc,
+		tags,
+		userId: req.currentUser._id
+	});
 	newDoc
 		.save()
 		.then(doc => {
@@ -28,11 +34,35 @@ router.post("/add_doc", (req, res) => {
 router.post("/update_doc", (req, res) => {
 	const { dname, email } = req.body.doc;
 	const uid = req.currentUser._id;
+	const tags = Object.values(req.body.doc.tags); //converting object values into array
+	tags.join("").split(""); //Removing blank spaces in the array of text elements
 	Doc.findOneAndUpdate(
 		{ dname: dname, email: email, userId: uid },
-		{ ...req.body.doc, userId: req.currentUser._id },
+		{
+			...req.body.doc,
+			tags,
+			userId: req.currentUser._id
+		},
 		{}
 	).then(doc => (doc ? res.json({ doc }) : res.status(400).json({})));
+});
+
+router.post("/unique_tags", (req, res) => {
+	let uniqueTags = [];
+
+	Doc.find({ userId: req.currentUser._id }).then(docs => {
+		//console.log(docs);
+		docs.map(doc => {
+			uniqueTags.concat(doc.tags);
+			uniqueTags = [...uniqueTags, ...doc.tags];
+
+			uniqueTags = uniqueTags.filter(
+				(el, index, self) => index === self.indexOf(el) && el !== ""
+			);
+		});
+		const tags = uniqueTags;
+		res.json({ tags });
+	});
 });
 
 router.post("/delete_doc", (req, res) => {

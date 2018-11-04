@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import axios from "axios";
 import { Container, Row, Col, Form, Input, Button } from "reactstrap";
 import NavBar from "../navs/NavBar";
 import { fetchDocs, deleteDoc } from "../../actions/docs";
@@ -19,13 +20,38 @@ class HomePage extends Component {
 			loading: false,
 			doc: null,
 			mode: "None",
-			docdeleted: false
+			docdeleted: false,
+			uniTags: [],
+			filter: "all"
 		};
 	}
 
-	componentDidMount = () => this.onIt(this.props);
+	componentDidMount = () => {
+		this.onIt(this.props);
 
-	onIt = props => props.fetchDocs();
+		this.onItTags();
+	};
+
+	componentDidUpdate = (prevProps, prevState) => {
+		if (prevState.result !== this.state.result) {
+			if (!this.state.query && this.state.filter === "all") {
+				this.setState({ result: this.props.docs });
+			}
+		}
+		if (prevState.filter !== this.state.filter) {
+			this.search();
+		}
+	};
+
+	onIt = props =>
+		props
+			.fetchDocs()
+			.then(() => this.setState({ result: this.props.docs }));
+
+	onItTags = () =>
+		axios
+			.post("/api/docs/unique_tags")
+			.then(res => this.setState({ uniTags: res.data.tags }));
 
 	// SEARCH FUNCTIONS
 	onSearch = e => {
@@ -35,12 +61,31 @@ class HomePage extends Component {
 	};
 
 	search = () => {
-		if (!this.state.query) return;
+		//if (!this.state.query) return;
 		this.setState({ loading: true });
 		var result = [];
 		this.props.docs.map(doc => {
-			if (doc !== undefined && doc.dname.includes(this.state.query)) {
-				result.push(doc);
+			if (this.state.filter === "all") {
+				if (doc !== undefined && doc.dname.includes(this.state.query)) {
+					result.push(doc);
+				}
+			} else {
+				if (this.state.query) {
+					if (
+						doc !== undefined &&
+						doc.dname.includes(this.state.query) &&
+						doc.tags.includes(this.state.filter)
+					) {
+						result.push(doc);
+					}
+				} else {
+					if (
+						doc !== undefined &&
+						doc.tags.includes(this.state.filter)
+					) {
+						result.push(doc);
+					}
+				}
 			}
 			return null;
 		});
@@ -63,12 +108,20 @@ class HomePage extends Component {
 		this.props.deleteDoc(result).then(doc => {
 			alert("doc successfully deleted...");
 			this.props.docs.splice(this.props.docs.indexOf(id), 1);
-			this.setState({ result: [], query: "" });
+			this.onItTags();
+			this.setState({ result: [], query: "", filter: "all" });
 		});
 	};
 
+	//Applying Filer
+	applyFiler = e => {
+		const filter = e.target.value;
+		this.setState({ filter });
+	};
+
 	render() {
-		const { query, result } = this.state;
+		const { query, result, uniTags } = this.state;
+		let id = 0;
 
 		return (
 			<div>
@@ -107,6 +160,57 @@ class HomePage extends Component {
 														onChange={this.onSearch}
 													/>
 												</Form>
+											</Col>
+										</Row>
+										<Row style={{ marginTop: "5px" }}>
+											<Col
+												sm="12"
+												md={{ size: 8, offset: 2 }}
+											>
+												<div style={{ float: "left" }}>
+													<strong>
+														Current
+														Filter:&nbsp;&nbsp;&nbsp;
+													</strong>
+													<font color="green">
+														{this.state.filter}
+													</font>
+												</div>
+												<div style={{ float: "right" }}>
+													<strong>
+														Filter:&nbsp;&nbsp;&nbsp;
+													</strong>
+													<Button
+														color="primary"
+														size="sm"
+														style={{
+															marginRight: "10px"
+														}}
+														value="all"
+														onClick={
+															this.applyFiler
+														}
+													>
+														Show All
+													</Button>
+													{uniTags.map(t => (
+														<Button
+															color="secondary"
+															key={t}
+															size="sm"
+															style={{
+																marginRight:
+																	"10px"
+															}}
+															value={t}
+															onClick={
+																this.applyFiler
+															}
+														>
+															{t}
+														</Button>
+													))}
+												</div>
 											</Col>
 										</Row>
 										<Row style={{ marginTop: "20px" }}>
@@ -197,6 +301,25 @@ class HomePage extends Component {
 																		{
 																			doc.password
 																		}
+																	</Col>
+																	<Col>
+																		{doc.tags.map(
+																			t => (
+																				<i
+																					key={
+																						id++
+																					}
+																				>
+																					&nbsp;
+																					<font color="green">
+																						{
+																							t
+																						}
+																					</font>
+																					&nbsp;
+																				</i>
+																			)
+																		)}
 																	</Col>
 																</Row>
 															</Container>

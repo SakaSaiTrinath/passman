@@ -6,7 +6,6 @@ import {
 	Button,
 	Form,
 	FormGroup,
-	Label,
 	Input,
 	Row,
 	Col,
@@ -19,9 +18,10 @@ const getInitialState = props =>
 	props.curdoc === undefined
 		? {
 				dname: "",
-				username: "None",
-				email: "None",
+				username: "",
+				email: "",
 				password: "",
+				tags: { tag0: "", tag1: "", tag2: "" },
 				link: ""
 		  }
 		: {
@@ -29,6 +29,11 @@ const getInitialState = props =>
 				username: props.curdoc[0].username,
 				email: props.curdoc[0].email,
 				password: props.curdoc[0].password,
+				tags: {
+					tag0: props.curdoc[0].tags[0],
+					tag1: props.curdoc[0].tags[1],
+					tag2: props.curdoc[0].tags[2]
+				},
 				link: props.curdoc[0].link
 		  };
 
@@ -47,6 +52,16 @@ class AddNewPage extends Component {
 		const { name, value } = event.target;
 		await this.setState({
 			data: { ...this.state.data, [name]: value }
+		});
+	};
+
+	handleTagChange = async event => {
+		const { name, value } = event.target;
+		await this.setState({
+			data: {
+				...this.state.data,
+				tags: { ...this.state.data.tags, [name]: value }
+			}
 		});
 	};
 
@@ -133,7 +148,9 @@ class AddNewPage extends Component {
 
 	render() {
 		const { dname, username, email, password, link } = this.state.data;
+		const { tag0, tag1, tag2 } = this.state.data.tags;
 
+		// It will redirect to view all page when record added or updated
 		if (this.state.redirect) {
 			return <Redirect to="/all" />;
 		}
@@ -173,9 +190,6 @@ class AddNewPage extends Component {
 												</p>
 											)}
 											<FormGroup>
-												<Label for="dname">
-													Name of site
-												</Label>
 												<Input
 													type="text"
 													name="dname"
@@ -198,9 +212,6 @@ class AddNewPage extends Component {
 											<Row>
 												<Col md={6}>
 													<FormGroup>
-														<Label for="username">
-															Username
-														</Label>
 														<Input
 															type="text"
 															name="username"
@@ -235,9 +246,6 @@ class AddNewPage extends Component {
 												</Col>
 												<Col md={6}>
 													<FormGroup>
-														<Label for="email">
-															Email
-														</Label>
 														<Input
 															type="email"
 															name="email"
@@ -273,9 +281,6 @@ class AddNewPage extends Component {
 											</Row>
 
 											<FormGroup>
-												<Label for="password">
-													Password
-												</Label>
 												<Input
 													type="text"
 													name="password"
@@ -295,9 +300,6 @@ class AddNewPage extends Component {
 												</p>
 											)}
 											<FormGroup>
-												<Label for="link">
-													Website Link
-												</Label>
 												<Input
 													type="text"
 													name="link"
@@ -315,6 +317,47 @@ class AddNewPage extends Component {
 													{this.state.errors.link}
 												</p>
 											)}
+
+											<FormGroup inline>
+												<Row>
+													<Col md={4}>
+														<Input
+															type="text"
+															value={tag0}
+															name="tag0"
+															placeholder="tag0"
+															onChange={
+																this
+																	.handleTagChange
+															}
+														/>
+													</Col>
+													<Col md={4}>
+														<Input
+															type="text"
+															value={tag1}
+															name="tag1"
+															placeholder="tag1"
+															onChange={
+																this
+																	.handleTagChange
+															}
+														/>
+													</Col>
+													<Col md={4}>
+														<Input
+															type="text"
+															value={tag2}
+															name="tag2"
+															placeholder="tag2"
+															onChange={
+																this
+																	.handleTagChange
+															}
+														/>
+													</Col>
+												</Row>
+											</FormGroup>
 
 											<Button
 												color="primary"
