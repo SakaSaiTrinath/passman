@@ -1,4 +1,4 @@
-#Passman
+# Passman
 
 This is a MERN (MongoDB, ExpressJS, ReactJS, NodeJs) App as password manager. This app stores records of websites with usernames, passwords and other stuff. App facilitates search feature with filter using tags given to records to search a record. All the CRUD (Creating, Reading, Updating, Deleting) of records are implemented in this app with beautiful UI.
 
