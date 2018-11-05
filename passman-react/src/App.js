@@ -5,6 +5,7 @@ import LoginPage from "./components/pages/LoginPage";
 import HomePage from "./components/pages/HomePage";
 import AllPage from "./components/pages/AllPage";
 import AddNewPage from "./components/pages/AddNewPage";
+import StatsPage from "./components/pages/StatsPage";
 
 import UserRoute from "./routes/UserRoute";
 import GuestRoute from "./routes/GuestRoute";
@@ -15,6 +16,12 @@ const App = ({ location }) => {
       <GuestRoute location={location} path="/" exact component={LoginPage} />
       <UserRoute location={location} path="/home" exact component={HomePage} />
       <UserRoute location={location} path="/all" exact component={AllPage} />
+      <UserRoute
+        location={location}
+        path="/stats"
+        exact
+        component={StatsPage}
+      />
       <UserRoute
         location={location}
         path="/addnew"

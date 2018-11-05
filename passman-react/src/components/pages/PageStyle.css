@@ -37,3 +37,9 @@
 	padding: 15px;
 	border-radius: 5px;
 }
+
+tbody > tr:hover {
+	color: yellow;
+	cursor: pointer;
+}
+

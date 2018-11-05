@@ -43,6 +43,9 @@ class NavBar extends React.Component {
                   <NavLink href="/home">Home</NavLink>
                 </NavItem>
                 <NavItem>
+                  <NavLink href="/stats">Stats</NavLink>
+                </NavItem>
+                <NavItem>
                   <NavLink href="/addnew">Add new</NavLink>
                 </NavItem>
                 <NavItem>

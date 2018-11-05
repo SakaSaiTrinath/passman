@@ -2,7 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { Container, Row, Col, Form, Input, Button } from "reactstrap";
+import {
+	Container,
+	Row,
+	Col,
+	Form,
+	Input,
+	Button,
+	Modal,
+	ModalBody
+} from "reactstrap";
 import NavBar from "../navs/NavBar";
 import { fetchDocs, deleteDoc } from "../../actions/docs";
 import { allDocsSelector } from "../../reducers/docs";
@@ -22,13 +31,14 @@ class HomePage extends Component {
 			mode: "None",
 			docdeleted: false,
 			uniTags: [],
-			filter: "all"
+			filter: "all",
+			pwdModal: false,
+			pwd: ""
 		};
 	}
 
 	componentDidMount = () => {
 		this.onIt(this.props);
-
 		this.onItTags();
 	};
 
@@ -117,6 +127,10 @@ class HomePage extends Component {
 	applyFiler = e => {
 		const filter = e.target.value;
 		this.setState({ filter });
+	};
+
+	pwdToggle = pwd => {
+		this.setState({ pwdModal: !this.state.pwdModal, pwd });
 	};
 
 	render() {
@@ -298,9 +312,41 @@ class HomePage extends Component {
 																</Row>
 																<Row>
 																	<Col>
-																		{
-																			doc.password
-																		}
+																		<a
+																			role="button"
+																			onClick={() =>
+																				this.pwdToggle(
+																					doc.password
+																				)
+																			}
+																		>
+																			<u>
+																				########
+																			</u>
+																		</a>
+																		<Modal
+																			isOpen={
+																				this
+																					.state
+																					.pwdModal
+																			}
+																			toggle={() =>
+																				this.pwdToggle(
+																					""
+																				)
+																			}
+																		>
+																			<ModalBody
+																			>
+																				<font color="green">
+																					{
+																						this
+																							.state
+																							.pwd
+																					}
+																				</font>
+																			</ModalBody>
+																		</Modal>
 																	</Col>
 																	<Col>
 																		{doc.tags.map(
