@@ -21,6 +21,11 @@ mongoose.connect(
 app.use("/api/auth", auth);
 app.use("/api/docs", docs);
 
+const staticFiles = express.static(
+	path.join(__dirname, "../../../passman-react/build")
+);
+app.use("/*", staticFiles);
+
 /* app.post("/api/auth", (req, res) => {
 	const { credentials } = req.body;
 	res.status(400).json({
