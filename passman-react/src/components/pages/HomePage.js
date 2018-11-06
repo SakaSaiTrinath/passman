@@ -104,7 +104,9 @@ class HomePage extends Component {
 
 	// EDIT FUNCTION
 	onEdit = e => {
-		const result = this.props.docs.filter(el => el._id === e.target.value);
+		const result = this.state.result.filter(
+			el => el._id === e.target.value
+		);
 		this.setState({
 			mode: "editmode",
 			doc: result
@@ -114,10 +116,10 @@ class HomePage extends Component {
 	//DELETE FUNCTION
 	onDelete = e => {
 		const id = e.target.value;
-		const result = this.props.docs.filter(el => el._id === id);
+		const result = this.state.result.filter(el => el._id === id);
 		this.props.deleteDoc(result).then(doc => {
 			alert("doc successfully deleted...");
-			this.props.docs.splice(this.props.docs.indexOf(id), 1);
+			this.state.result.splice(this.state.result.indexOf(id), 1);
 			this.onItTags();
 			this.setState({ result: [], query: "", filter: "all" });
 		});

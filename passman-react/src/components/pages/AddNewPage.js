@@ -68,10 +68,7 @@ class AddNewPage extends Component {
 	validateFields = data => {
 		const errors = {};
 		if (!data.dname) errors.dname = "Can't be blank!";
-		if (!data.username) errors.username = "Username needed!";
-		if (!data.email) errors.email = "Can't be blank!";
 		if (!data.password) errors.password = "Can't be blank!";
-		if (!data.link) errors.link = "Can't be blank!";
 		return errors;
 	};
 
@@ -116,31 +113,10 @@ class AddNewPage extends Component {
 				}
 			});
 		}
-		if (this.state.errors.username) {
-			this.setState({
-				data: {
-					username: ""
-				}
-			});
-		}
-		if (this.state.errors.email) {
-			this.setState({
-				data: {
-					email: ""
-				}
-			});
-		}
 		if (this.state.errors.password) {
 			this.setState({
 				data: {
 					password: ""
-				}
-			});
-		}
-		if (this.state.errors.link) {
-			this.setState({
-				data: {
-					link: ""
 				}
 			});
 		}

@@ -44,7 +44,11 @@ class AllPage extends Component {
 			.then(() => this.setState({ result: this.props.docs }));
 
 	modalToggle = doc => {
-		this.setState({ modal: !this.state.modal, doc });
+		this.setState({
+			modal: !this.state.modal,
+			doc,
+			collapse: false
+		});
 	};
 
 	tooltipToggle = () => {
