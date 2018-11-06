@@ -8,10 +8,14 @@
 	"dependencies": {
 		"concurrently": "^4.0.1"
 	},
+	"engines": {
+		"node": "8.10.0"
+	},
 	"scripts": {
 		"install": "(cd passman-react && yarn) && (cd passman-api && yarn)",
 		"start": "concurrently \"cd passman-react && PORT=3000 yarn start\" \"cd passman-api && PORT=8080 yarn start\"",
 		"build": "concurrently \"cd passman-react && yarn build\" \"cd passman-api && yarn build\"",
-		"start:prod": "cd passman-api && yarn start:prod"
+		"start:prod": "cd passman-api && yarn start:prod",
+		"heroku-postbuild": "yarn build"
 	}
 }
