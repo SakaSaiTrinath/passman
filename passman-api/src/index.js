@@ -18,13 +18,10 @@ mongoose.connect(
 	{ useNewUrlParser: true }
 );
 
-app.use("/api/auth", auth);
-app.use("/api/docs", docs);
-
 const staticFiles = express.static(
-	path.join(__dirname, "../../../passman-react/build")
+	path.join(__dirname, "../../passman-react/build")
 );
-app.use("/*", staticFiles);
+app.use(staticFiles);
 
 /* app.post("/api/auth", (req, res) => {
 	const { credentials } = req.body;
@@ -34,6 +31,11 @@ app.use("/*", staticFiles);
 		}
 	});
 }); */
+
+app.use("/api/auth", auth);
+app.use("/api/docs", docs);
+
+app.get("/*", staticFiles);
 
 app.get("/*", function(req, res) {
 	res.sendFile(path.join(__dirname, "index.html"));

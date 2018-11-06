@@ -6,16 +6,18 @@
 	"author": "Saka Sai Trinath <sst.trinath@gmail.com>",
 	"license": "MIT",
 	"dependencies": {
-		"concurrently": "^4.0.1"
+		"concurrently": "^4.0.1",
+		"rimraf": "^2.5.4"
 	},
 	"engines": {
 		"node": "8.10.0"
 	},
 	"scripts": {
+		"build": "concurrently \"cd passman-react && yarn build\" \"cd passman-api && yarn build\"",
+		"clean": "concurrently \"rimraf node_modules\" \"cd passman-react && rimraf node_modules build\" \"cd passman-api && rimraf node_modules build\"",
+		"heroku-postbuild": "yarn build",
 		"install": "(cd passman-react && yarn) && (cd passman-api && yarn)",
 		"start": "concurrently \"cd passman-react && PORT=3000 yarn start\" \"cd passman-api && PORT=8080 yarn start\"",
-		"build": "concurrently \"cd passman-react && yarn build\" \"cd passman-api && yarn build\"",
-		"start:prod": "cd passman-api && yarn start:prod",
-		"heroku-postbuild": "yarn build"
+		"start:prod": "cd passman-api && yarn start:prod"
 	}
 }
