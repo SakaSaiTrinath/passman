@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node -- src/index.js",
     "build": "babel . --ignore node_modules,build --out-dir build",
-    "start:prod": "node build/index.js"
+    "start:prod": "node build/src/index.js"
   },
   "author": "",
   "license": "ISC",
