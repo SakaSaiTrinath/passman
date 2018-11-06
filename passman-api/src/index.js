@@ -19,7 +19,7 @@ mongoose.connect(
 );
 
 const staticFiles = express.static(
-	path.join(__dirname, "../../passman-react/build")
+	path.join(__dirname, "../../../passman-react/build")
 );
 app.use(staticFiles);
 
