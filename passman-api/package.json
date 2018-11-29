@@ -23,9 +23,9 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
     "babel-preset-env": "^1.7.0"
-  }/*,
+  },
   "devDependencies": {
-    "nodemon": "^1.17.5",
+    //"nodemon": "^1.17.5",
     "babel-register": "^6.22.0"
-  }*/
+  }
 }
