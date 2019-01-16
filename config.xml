@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "com.passmanapp.passmanapp"
+    versionCode = "10"
+    version     = "0.0.1" >
+
+<!-- versionCode is optional and Android only -->
+
+  <name>Passman App</name>
+
+  <description>
+      This app lets you manage your passwords.
+  </description>
+
+  <author href="https://github.com/SakaSaiTrinath" email="sreash.kash@gmail.com">
+      Saka Sai Trinath
+  </author>
+
+</widget>
